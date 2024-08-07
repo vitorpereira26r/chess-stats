@@ -11,10 +11,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import sys
+import os
+
+CHESS_DOT_COM_URL = config('CHESS_DOT_COM_API_URL')
+
+DB_NAME = config('DB_NAME')
+DB_USER = config('DB_USER')
+DB_PASS = config('DB_PASS')
+DB_HOST = config('DB_HOST')
+
+CHESS_DOT_COM_HEADERS = {
+    'User-Agent': f'username: ${os.getenv("CHESS_USERNAME")}, email: ${os.getenv("CHESS_EMAIL")}'
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'utils'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -79,10 +94,10 @@ WSGI_APPLICATION = 'chessstats.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'chessstatsdb',
-        'USER': 'vitor',
-        'PASSWORD': '12345678',
-        'HOST': 'vitorpereiraresende.com',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
         'PORT': '5432',
     }
 }
