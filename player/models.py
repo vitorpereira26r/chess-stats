@@ -2,7 +2,7 @@ from django.db import models
 
 
 class PlayerRequests(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50)
     service_used = models.CharField(max_length=20)
     request_time = models.DateTimeField(auto_now_add=True)
@@ -12,5 +12,5 @@ class PlayerRequests(models.Model):
 
     class Meta:
         db_table = 'player_requests'
-        indexes = [models.Index(fields=['username'], name='username')]
+        indexes = [models.Index(fields=['username'], name='username_index')]
         managed = True

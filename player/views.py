@@ -1,6 +1,7 @@
 from .exceptions import PlayerNotFoundException
 from rest_framework.views import APIView
 from rest_framework import status
+from .models import PlayerRequests
 from .functions.decorator import player_data
 from utils.api_response import fail_response
 
@@ -11,6 +12,11 @@ class PlayerProfile(APIView):
     def get(request, username):
         try:
             response = player_data(request, username)
+            #request_log = PlayerRequests(
+                #username=username,
+                #service_used="PlayerProfile",
+            #)
+            #request_log.save()
         except PlayerNotFoundException as e:
             response = fail_response(
                 message=e.message,
