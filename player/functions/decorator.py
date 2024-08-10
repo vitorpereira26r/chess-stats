@@ -67,6 +67,23 @@ def player_ratings(username):
     return success_response(data=format_data, message="Rating data was successfully retrieved")
 
 
+def is_player_online(username):
+    endpoint = f'{API_URL}pub/player/{username}/is-online'
+    response = requests.get(endpoint, headers=HEADERS)
+
+    if response.status_code == 404:
+        raise PlayerNotFoundException(message=f'Player {username} not found')
+
+    data = response.json()
+
+    format_data = {
+        "username": username,
+        "is_online": data.get('online', False),
+    }
+
+    return success_response(data=format_data, message="Player data was successfully retrieved")
+
+
 def daily_chess_record(json):
     daily = {}
 
